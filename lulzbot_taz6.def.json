@@ -1,0 +1,67 @@
+{
+    "id": "LulzBot_TAZ6",
+    "name": "LulzBot TAZ 6",
+    "inherits": "lulzbot_taz_base",
+    "version": 2,
+    "metadata":
+    {
+        "author": "Fargo Additive Manufacturing",
+        "manufacturer": "Fargo Additive Manufacturing Equipment 3D, LLC",
+        "machine_priority": "99",
+        "priority": "00",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz6_extruder"
+        },
+        "platform": "lulzbot_taz6.stl",
+        "platform_offset":
+        [
+            0,
+            0,
+            0
+        ],
+        "visible": true,
+        "printer_info_link": "https://www.lulzbot.com/store/printers/lulzbot-taz-6?pk_campaign=software-cura",
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-single-extruder-tool-head-v21?pk_campaign=software-cura",
+        "base_machine": "lulzbot_taz_6",
+        "base_machine_name": "[Legacy] TAZ 6",
+        "firmware_last_version": "2.0.9.0.13",
+        "user_toolhead_name": "Single Extruder"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6"
+        },
+        "machine_width":
+        {
+            "default_value": 280
+        },
+        "machine_depth":
+        {
+            "default_value": 280
+        },
+        "machine_height":
+        {
+            "default_value": 250
+        },
+        "machine_start_gcode":
+         {
+            "default_value":"\";This G-Code has been generated specifically for the LulzBot TAZ 6 with standard extruder\r\n;\r\n;The following lines can be uncommented for printer specific fine tuning\r\n;More information can be found at https:\/\/marlinfw.org\/meta\/gcode\/\r\n;\r\n;M92 E833                 ;Set Axis Steps-per-unit\r\n;M301 P21.0 I1.78 D61.93  ;Set Hotend PID\r\n;M906 E135                ;Digipot Motor Current ((750mA-750)\/5+135) = 135\r\n;M206 Y4                  ;Set Home Offsets (default:4)\r\n;\r\nM73 P0 ; clear GLCD progress bar\r\nM75 ; start GLCD timer\r\nG26 ; clear potential 'probe fail' condition\r\nM107 ; disable fans\r\nM420 S0 ; disable previous leveling matrix\r\nG90 ; absolute positioning\r\nM82 ; set extruder to absolute mode\r\nG92 E0 ; set extruder position to 0\r\nM140 S{material_bed_temperature_layer_0} ; start bed heating up\r\nM109 R180 ; soften filament before homing Z\r\nG28 ; Home all axis\r\nG1 E-15 F100 ; retract filament\r\nM109 R180                  ; wait for extruder to reach wiping temp\r\n;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)\r\nG12                         ; wiping sequence\r\nM206 X0 Y4 Z0               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###\r\nM109 R180 ; wait for extruder to reach probe temp\r\nG1 X-10 Y293 F4000 ; move above first probe point\r\nM204 S100 ; set probing acceleration\r\nG29 ; start auto-leveling sequence\r\nM420 S1 ; activate bed level matrix\r\nM425 Z\t\t\t     ; use measured Z backlash for compensation\r\nM425 Z F0\t\t     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)\r\nM204 S500 ; restore standard acceleration\r\nG1 X0 Y0 Z15 F5000 ; move up off last probe point\r\nG4 S1 ; pause\r\nM400 ; wait for moves to finish\r\nM117 Heating... ; progress indicator message on LCD\r\nM109 R{material_print_temperature_layer_0} ; wait for extruder to reach printing temp\r\nM190 R{material_bed_temperature_layer_0} ; wait for bed to reach printing temp\r\nG1 Z2 E0 F75 ; prime tiny bit of filament into the nozzle\r\nM117 TAZ 6 Printing... ; progress indicator message on LCD\r\n\""
+
+        },
+        "machine_end_gcode":
+        {
+            "default_value" : "\"M400                                      ; wait for moves to finish\r\nM140 S45 ; start bed cooling\r\nM104 S0                                   ; disable hotend\r\nM107                                      ; disable fans\r\nG91                                       ; relative positioning\r\nG1 E-1 F300                               ; filament retraction to release pressure\r\nG1 Z20 E-5 X-20 Y-20 F3000                ; lift up and retract even more filament\r\nG1 E6                                     ; re-prime extruder\r\nM117 Cooling please wait                  ; progress indicator message on LCD\r\nG90                                       ; absolute positioning\r\nG1 Y0 F3000                               ; move to cooling position\r\nM190 R45 ; wait for bed to cool down to removal temp\r\nG1 Y280 F3000                             ; present finished print\r\nM140 S45; keep temperature or cool downs\r\nM77\t\t\t\t\t  ; stop GLCD timer\r\nM84                                       ; disable steppers\r\nG90                                       ; absolute positioning\r\nM117 Print Complete.                      ; print complete message\r\n\""
+        },   
+        "machine_wipe_gcode":
+        {
+            "default_value": "\";This G-Code has been generated specifically for the LulzBot TAZ 6 with standard extruder\r\nG26 ; clear potential 'probe fail' condition\r\nG21 ; set units to Millimetres\r\nM107 ; disable fans\r\nG90 ; absolute positioning\r\nM82 ; set extruder to absolute mode\r\nG92 E0 ; set extruder position to 0\r\nM109 S{material_soften_temperature} ; start heating hot end\r\nG28 XY ; home X and Y\r\nG1 X-19 Y258 F1000 ; move to safe homing position\r\nG28 Z ; home Z\r\nM109 R{material_soften_temperature} ; soften filament before homing Z\r\nG1 E-15 F100 ; retract filament\r\nM109 R{material_wipe_temperature}                  ; wait for extruder to reach wiping temp\r\n;M206 X0 Y0 Z0              ; uncomment to adjust wipe position (+X ~ nozzle moves left)(+Y ~ nozzle moves forward)(+Z ~ nozzle moves down)\r\nG12                         ; wiping sequence\r\nM206 X0 Y0 Z0               ; reseting stock nozzle position ### CAUTION: changing this line can affect print quality ###\r\n\""
+        },
+        "firmware_machine_type":
+        {
+            "resolve": "'LulzBot TAZ 6'"
+        }
+    }
+}
