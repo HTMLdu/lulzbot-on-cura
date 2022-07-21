@@ -15,4 +15,3 @@ Place files in extruder folder into c:/Program Files/Ultimaker Cura{version}/res
 Place files in definitions folder into c:/Program Files/Ultimaker Cura{version}/resources/definitions
 Place file in meshes folder into c:/Program Files/Ultimaker Cura{version}/resources/meshes
 
-Dual Extruder Coming Soon!
