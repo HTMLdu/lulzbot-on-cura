@@ -1,0 +1,44 @@
+{
+    "id": "LulzBot_Taz6_Dual_v2",
+    "name": "TAZ 6 DualExtruder v2",
+    "inherits": "lulzbot_taz6",
+    "version": 2,
+    "metadata":
+    {
+        "type": "machine",
+        "visible": true,
+        "priority": "10",
+        "machine_extruder_trains":
+        {
+            "0": "lulzbot_taz6_dual_v2_1st",
+            "1": "lulzbot_taz6_dual_v2_2nd"
+        },
+        "toolhead_info_link": "https://www.lulzbot.com/store/tool-heads/lulzbot-taz-dual-extruder-tool-head-v2?pk_campaign=software-cura",
+        "firmware_toolhead_name": "DualExtruder v2",
+        "user_toolhead_name": "DualExtruder v2",
+        "nozzle_offsetting_for_disallowed_areas": false,
+        "firmware_last_version": "1.1.9.34"
+    },
+    "overrides":
+    {
+        "machine_name":
+        {
+            "default_value": "LulzBot TAZ 6 DualExtruder v2"
+        },
+        "machine_start_gcode":
+        {
+            "default_value": ";This profile is designed specifically for LulzBot TAZ6 3D Printer with Dual Extruder V2 Tool Head\r\nM75\t\t\t     ; start GLCD timer\r\nG26                          ; clear potential 'probe fail' condition\r\nM107                         ; disable fans\r\nM420 S0                      ; disable leveling matrix\r\nG90                          ; absolute positioning\r\nT0                           ; select this extruder first\r\nM82                          ; set extruder to absolute mode\r\nG92 E0                       ; set extruder position to 0\r\nM140 S{material_bed_temperature_layer_0}  ; get bed heating up\r\nM104 R{material_soften_temperature_1} T1                 ; soften filament\r\nM109 R{material_soften_temperature_0} T0                 ; soften filament\r\nM109 R{material_soften_temperature_1} T1                 ; soften filament\r\nG28 X Y                      ; home X and Y\r\nG1 X-19 Y258                 ; move over the Z_MIN switch\r\nM104 R{material_wipe_temperature_1} T1                 ; wait for T1 to reach temp\r\nM109 R{material_wipe_temperature_0} T0                 ; wait for T0 to reach temp\r\nM109 R{material_wipe_temperature_1} T1                 ; wait for T1 to reach temp\r\nG28 Z                        ; home Z\r\nG1 E-15 F100                 ; suck up XXmm of filament\r\nT1                           ; switch extruders\r\nM82                          ; set extruder to absolute mode\r\nG92 E0                       ; set E to 0\r\nG1 E-15 F100                 ; suck up filament\r\nT0                           ; switch extruders\r\n;G92 E-60                     ; adjust E value\r\nG1 X-17 Y100 F3000           ; move above wiper pad\r\nG1 Z1                        ; push nozzle into wiper\r\nG1 X-19 Y95 F1000            ; slow wipe\r\nG1 X-17 Y90 F1000            ; slow wipe\r\nG1 X-19 Y85 F1000            ; slow wipe\r\nG1 X-17 Y90 F1000            ; slow wipe\r\nG1 X-19 Y80 F1000            ; slow wipe\r\nG1 X-17 Y95 F1000            ; slow wipe\r\nG1 X-19 Y75 F2000            ; fast wipe\r\nG1 X-17 Y85 F2000            ; fast wipe\r\nG1 X-19 Y80 F2000            ; fast wipe\r\nG1 X-17 Y70 F2000            ; fast wipe\r\nG1 X-19 Y75 F2000            ; fast wipe\r\nG1 X-17 Y95 F1000            ; slow wipe\r\nG1 X-19 Y90 F1000            ; slow wipe\r\nG1 X-17 Y85 F1000            ; slow wipe\r\nG1 X-19 Y90 F1000            ; slow wipe\r\nG1 X-17 Y80 F1000            ; slow wipe\r\nG1 X-19 Y95 F1000            ; slow wipe\r\nG1 X-17 Y75 F2000            ; fast wipe\r\nG1 X-19 Y85 F2000            ; fast wipe\r\nG1 X-17 Y80 F2000            ; fast wipe\r\nG1 X-19 Y90 F2000            ; fast wipe\r\nG1 X-17 Y85 F2000            ; fast wipe\r\nG1 Z10                       ; raise extruder\r\nM109 R{material_probe_temperature_0}                   ; heat to probe temp\r\nG1 X-9 Y-9                   ; move above first probe point\r\nM204 S100                    ; set accel for probing\r\nG29                          ; probe sequence (for auto-leveling)\r\nM420 S1                      ; enable leveling matrix\r\nM425 Z\t\t\t     ; use measured Z backlash for compensation\r\nM425 Z F0\t\t     ; turn off measured Z backlash compensation. (if activated in the quality settings, this command will automatically be ignored)\r\nM204 S500                    ; set accel back to normal\r\nG1 X0 Y0 Z15 F5000           ; get out the way\r\nM400                         ; clear buffer\r\nM140 S{material_bed_temperature_layer_0}; get bed heating up\r\nM104 S{material_print_temperature_layer_0_1} T1; set extruder temp\r\nM109 R{material_print_temperature_layer_0_0} T0 ; set extruder temp and wait\r\nM109 R{material_print_temperature_layer_0_1} T1; set extruder temp and wait\r\nT1                           ; switch to second extruder\r\nG1 E0 F100                   ; prime nozzle from previous print\r\nG1 F100 E-{retraction_amount} ;retract second nozzle before print\r\nG92 E-30                     ; adjust to 1st nozzle e value\r\nT0                           ; switch back to back\r\nM190 R{material_bed_temperature_layer_0}; get bed temping up during first layer\r\nG1 Z2 E0 F75                 ; extrude filament back into nozzle\r\nM117 TAZ Printing...         ; LCD status message\r\n"
+        },
+        "machine_end_gcode":
+        {
+            "default_value": "M400\r\nM104 S0 T0                     ; T0 hotend off\r\nM104 S0 T1                     ; T1 hotend off\r\nM107                           ; fans off\r\nG91                            ; relative positioning\r\nT0\r\nG1 E-1 F300                    ; retract the filament a bit before lifting the nozzle, to release some of the pressure\r\nG1 Z20 E-5 X-20 Y-20 F3000     ; move Z up a bit and retract filament even more\r\nG1 E6                          ; re-prime extruder 1\r\nT1\r\nG1 E-5 F300                    ; retract the filament a bit before lifting the nozzle, to release some of the pressure\r\nG1 E5                          ; re-prime extruder 2\r\nT0\r\nM117 Cooling please wait       ; progress indicator message\r\nG90                            ; absolute positioning\r\nG1 Y0 F3000                    ; move to cooling position\r\nM190 R{material_part_removal_temperature}                       ; set bed to cool off\r\nG1 Y280 F3000                  ; present finished print\r\nM140 S{material_keep_part_removal_temperature_t}; keep temperature or cool downs\r\nM77\t\t\t       ; stop GLCD timer\r\nM84                            ; steppers off\r\nG90                            ; absolute positioning\r\nM117 Print complete            ; progress indicator message\r\n"
+        },
+        "machine_wipe_gcode":
+        {
+            "default_value": ""
+        },
+        "machine_extruder_count": {
+            "default_value": 2
+        }
+    }
+}
