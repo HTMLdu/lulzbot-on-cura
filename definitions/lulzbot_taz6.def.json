@@ -5,8 +5,8 @@
     "version": 2,
     "metadata":
     {
-        "author": "Fargo Additive Manufacturing",
-        "manufacturer": "Fargo Additive Manufacturing Equipment 3D, LLC",
+        "author": "Aleph Objects",
+        "manufacturer": "Aleph Objects, Inc",
         "machine_priority": "99",
         "priority": "00",
         "machine_extruder_trains":
